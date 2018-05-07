@@ -143,7 +143,7 @@ router.post("/register",function(req,res){
 			  			res.redirect("/register");
 			  		} else {
 	                    
-	                    var link = "http://localhost:3000/verification/" + hash;
+	                    var link = "https://yoblogs.herokuapp.com//verification/" + hash;
 	                    sendMail(email,link);
 	                }
 	            });

@@ -24,7 +24,9 @@ var $ = require('jquery');
 
 
 //APP CONFIG
-mongoose.connect("mongodb://localhost/restful_blog_app_v8");
+//mongoose.connect("mongodb://localhost/restful_blog_app_v8");
+mongoose.connect("mongodb://ross:hadoop@ds119810.mlab.com:19810/yoblogdb");
+
 
 app.use(bodyParser.urlencoded({extended :true}));
 app.use(expressSanitizer());
@@ -67,6 +69,6 @@ app.use(commentRoutes);
 
 
 
-app.listen(3000, function(){
-      console.log("Server has started!!");
+app.listen( process.env.PORT || 3000,function(){
+    console.log("server has started");
 });
