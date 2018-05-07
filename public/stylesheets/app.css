@@ -1,0 +1,244 @@
+body {
+    font-family: Georgia;
+    background-color: #ece9e9;
+
+}
+
+.container	{
+	
+	margin-top: 100px;
+
+}
+.navbar-light .navbar-brand	{
+	color: #8309ab;
+    font-family: sans-serif;
+    font-style: oblique;
+}
+
+#delete {
+	display: inline;
+}
+
+#signUpForm	{
+	margin: 15%;
+}	
+.loginForm	{
+	margin: 12% 30% auto 30%;
+	min-height: 60%;
+    background: rgba(0,0,0,.87);
+    padding: 8%;
+    border-radius: 7px;
+
+}
+
+.form-item	{
+	padding: 5px;
+}
+.formInsideLabel{
+	font-family: Georgia, serif;
+	font-size: 1.5em;
+    color: white;
+	padding : 5px;
+    
+
+
+}
+.formInsideInput {
+	outline: none;
+}
+
+.h1	{
+	color: white;
+	font-size: 2em;
+	font-family: Georgia, serif;
+}
+.custom-button	{
+	min-width: 80px;
+    height: 30px;
+    background-color: black;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-left: 5px;
+    border-color: black;
+    color: white;
+    font-family: Georgia, serif;
+
+
+
+}
+.form-item table tr td input	{
+	border-radius:10px; 
+	padding-left: 5px
+}
+.comment-time {
+	float: right;
+}
+
+
+.comment {
+    border: 1px solid #d4d4d5;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom:5px
+}
+.thumbnail img {
+    max-height: 100%;
+    max-width: 100%;
+}
+.row.border-bottom	{
+	padding: inherit;
+}
+.img-thumbnail	{
+	border : 1px solid #8309ab;
+}
+#brand {
+	font-family: sans-serif;
+	font-style: oblique;
+	color: #8309ab;
+
+}
+.title	{
+	
+	color: #8309ab;
+	font-family: sans-serif;
+}
+@media (min-width: 1000px) {
+	.loginAndSignupForms {
+         width : 30%; 
+	}
+}
+
+.loginAndSignupForms	{
+	margin : 25px auto;
+}
+
+@media (max-width: 767px)	{
+	#inputComment	{
+	width: 95%;
+	margin-bottom: 5px;
+
+}
+
+}
+
+#ratingButton	{
+	margin-bottom: 7px;
+
+}
+
+.avgRating {
+	
+	font-size: 1.5em; 
+	
+    color: white;  
+    padding: 2px;
+    display: inline-block;
+
+
+
+                          
+}
+.Rating {
+	
+	font-size: 1.5em; 
+	margin-right: 5px; 
+    color: white;                            
+}
+.rating {
+	color : white; 
+	padding :2px;
+}
+.liked	{
+	
+	border-radius:5px; 
+	background-color: green;
+}
+.disliked	{
+	
+	border-radius:5px; 
+	background-color: red;
+}
+.btn.btn-outline-success	{
+	margin-bottom: 7px;
+
+}
+.btn.btn-outline-danger	{
+	margin-bottom: 7px;
+
+}
+
+/* STYLES for profile.ejs  */
+
+#error-page {
+    text-align: center;
+    height: 100%;
+    white-space: nowrap;
+    word-break: normal;
+}
+
+#error-page-content	{
+   vertical-align: middle;
+   display: inline-block;
+}
+#error-image{
+	max-width: 100%;
+	max-height: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.circleBase {
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+}
+
+
+.type1 {
+    width: 200px;
+    height: 250px;
+    background: aqua;
+    border: 1px solid #8309ab;
+}
+#pic{
+	
+	display: table;
+	margin: 0 auto;
+}
+#profilePic{
+	display: table;
+	margin: 0 auto;
+}
+#addNewPost	{
+	margin: 0 auto;
+    display: table;
+}
+
+#changeProfilePicture{
+	display: table;
+    margin: 0 auto;
+    border: none;
+    background: #5dac69;
+    color: white;
+    border-radius: 5px;
+    margin-top: 10px;
+    outline: none;
+}
+#submitProfilePicture{
+	display: table;
+    margin: 0 auto;
+    border: none;
+    background: #5dac69;
+    color: white;
+    border-radius: 5px;
+    margin-top: 10px;
+    outline: none;
+}
+#inputPic {
+	display: table;
+    margin: 0 auto;
+    border: none;
+    background: #5dac69;
+    color: white;
+    border-radius: 5px;
+    margin-top: 10px;
+}

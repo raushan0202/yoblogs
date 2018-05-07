@@ -1,0 +1,96 @@
+<% include ./partials/header %>
+<script type="text/javascript" src="/scripts/user.js"></script>
+<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+
+
+<% var flag = 0; %>
+<div class="container fluid">
+      
+      
+      <div class="row">
+           <div class="col-md-4">
+               <div class="row">
+                   <div id="pic" class="col-md-12">
+                        <% if(user.imageName == null){ %>
+                            <img  id="profilePic" class="img-fluid circleBase type1" alt="Responsive image"  src="/images/serverSideImages/imagePlaceholder.jpeg">
+                        <% }else { %>
+                            <img  id="profilePic" class="img-fluid circleBase type1" alt="Responsive image"  
+                            src="/images/uploads/profile/<%= user.imageName %>">
+                        <% } %>
+                        <button id="changeProfilePicture" onclick="showFileChooser()" >Change Profile Picture</button>
+                        <form action="/profile/picture" method="POST" enctype="multipart/form-data">
+                        <input id="inputPic" type="file" name="profilePic" onchange="readURL(this);" hidden>
+                        <button id="submitProfilePicture"  hidden>Submit</button>
+                        </form>
+                   </div>
+
+               </div>
+               <div class="row">
+                    
+               </div>
+             
+           </div>
+           <div class="col-md-8">
+                  <h3 style="color: #8309ab;font-family: sans-serif;" >Your Blogs</h3>
+                  <div class="img-thumbnail">
+                    <% blogs.forEach(function(blog){ %>
+                      <% if(blog.author.id.equals(currentUser._id)){ %>
+                        <% flag = 1; %>
+                        <div class="row border-bottom">
+                            <div class="col-lg-5 col-sm-6">
+                              <div class="thumbnail">
+                                   <img class="image responsive" src="/images/uploads/blogs/<%= blog.imageName %>">
+                              </div>
+                            </div>
+                            <div class="col-lg-7 col-sm-6 ">
+                                        <a class="h5" style="text-decoration: none" href="/blogs/<%= blog._id %>" > <%= blog.title %></a>
+                                        <div class="text-muted">
+                                            <span><%= blog.created.toDateString() %></span>
+                                        </div>
+                                        <div>
+                                            <p><%= blog.body.substring(0,100) %>...</p>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-outline-success" href="/blogs/<%= blog._id %>" > Read More </a>
+
+                                            <% if(blog.avgRating != 0){ %>
+                                                            
+                                                  <% if(blog.avgRating >= 3){ %>
+                                                       <span  class="avgRating liked"  > 
+                                                       <%= blog.avgRating.toFixed(1) %> ★</span>
+                                                  <% } else { %>
+                                                       <span class="avgRating disliked"  > 
+                                                       <%= blog.avgRating.toFixed(1) %> ★</span>
+                                                  <% } %>
+                                            <% } %>
+
+                                        </div>
+                            </div>
+                    
+                        </div>
+                       <% } %>
+                       
+                     <% });%>
+                     <% if(flag == 0){ %>
+                           <h6 align="center" style="color:green;"" >No Post Yet!! No Worries, Click below to add a NEW POST.</h6>
+                           <a href="/blogs/new" class="btn btn-outline-success" id="addNewPost" >Add New Post</a>
+                     <% } %>
+                  </div>
+           </div>
+      </div>
+</div>
+
+
+
+
+<% include ./partials/footer%>
+
+
+
+
+
+
+
+

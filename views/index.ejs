@@ -1,0 +1,64 @@
+<% include ./partials/header %>
+
+<div class="container fluid">
+      <div class="row">
+           <div class="col-md-2">
+             
+           </div>
+           <div class="col-md-7">
+                <h3 class="title" >Recent Blogs</h3>
+           </div>
+      </div>
+
+      <div class="row">
+           <div class="col-md-2">
+             
+           </div>
+
+           <div class="col-md-7 img-thumbnail">
+              
+                <% blogs.forEach(function(blog){ %>
+                    <div class="row border-bottom">
+                        <div class="col-lg-5 col-sm-6">
+                          <div class="thumbnail">
+                               <img class="image responsive" src="/images/uploads/blogs/<%= blog.imageName %>">
+                          </div>
+                        </div>
+                        <div class="col-lg-7 col-sm-6 ">
+                                    <a class="h5 title" style="text-decoration: none" href="/blogs/<%= blog._id %>" > <%= blog.title %></a>
+                                    <div class="text-muted">
+                                        <span><%= blog.created.toDateString() %></span>
+                                        <span style="float: right"> Posted by <%= blog.author.username %></span>
+
+                                    </div>
+                                    <div>
+                                        <p><%= blog.body.substring(0,100) %>...</p>
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-outline-success" href="/blogs/<%= blog._id %>" > Read More </a>
+
+                                        <% if(blog.avgRating != 0){ %>
+                                                        
+                                              <% if(blog.avgRating >= 3){ %>
+                                                   <span class="avgRating liked"  > 
+                                                   <%= blog.avgRating.toFixed(1) %> ★</span>
+                                              <% } else { %>
+                                                   <span class="avgRating disliked"  > 
+                                                   <%= blog.avgRating.toFixed(1) %> ★</span>
+                                              <% } %>
+                                        <% } %>
+                                    </div>
+                        </div>
+                    
+                    </div>
+                 <% });%>
+                
+
+           </div>
+           <div class=col-md-2>
+
+           </div>
+      </div>
+</div>
+
+<% include ./partials/footer%>

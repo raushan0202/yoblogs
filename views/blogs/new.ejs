@@ -1,0 +1,39 @@
+<% include ../partials/header %>
+
+<div class="container">
+      <div class="row">
+            <div class="col-md-2">
+            </div>
+
+            <div class="col-md-7 img-thumbnail">
+                  <div class="row">
+                       
+                        <div class="col-md-12">
+
+                            <div class="h3 title">New Blog</div>
+                            <form class="" action="/blogs" method="POST" enctype="multipart/form-data">
+                                <div class="form-group">
+                                      <label>Title</label>
+                                      <input class="form-control" type="text" name="title" placeholder="title" required>
+                                </div>
+                                <div class="form-group" style="display: inline;">
+                                      <label>Image</label>
+                                      <input class="form-control" type="file" id="newBlogImageFile" name="imagefile" placeholder="image" required accept=".png, .jpg, .jpeg, .gif" onchange="verifyFile('newBlogImageFile')">
+                                </div>
+                                <div class="form-group">
+                                      <label>Blog Content</label>
+                                      <textarea class="form-control" name="blogBody" rows="8" placeholder="Blog goes here..." required></textarea>
+                                </div>
+
+                                 <input type="submit" class="btn btn-outline-success" value="Submit">
+
+                            </form>
+                        
+                        </div>
+                        
+                  </div>
+            </div>
+      </div>
+</div>
+
+<% include ../partials/footer%>

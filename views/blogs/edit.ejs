@@ -1,0 +1,43 @@
+<% include ../partials/header %>
+<script type="text/javascript" src="/scripts/blogs.js"></script>
+
+
+
+<div class="container">
+      <div class="row">
+            <div class="col-md-2">
+            </div>
+
+            <div class="col-md-7 img-thumbnail">
+                  <div class="row">
+                       
+                        <div class="col-md-12">
+
+                            <div class="h3">Edit <%= blog.title %></div>
+                            <form class="ui form" action="/blogs/<%= blog._id%>?_method=PUT" method="POST" enctype="multipart/form-data">
+                                <div class="form-group">
+                                      <label>Title</label>
+                                      <input class="form-control" type="text" name="blog[title]" value="<%= blog.title %>" required>
+                                </div>
+                                <div class="form-group" style="display: inline;">
+                                      <label>Image</label>
+                                      <input class="form-control" type="file" id="editImageFile" name="imagefile" value="<%= blog.imageName %>" required onchange="verifyFile('editImageFile')">
+                                </div>
+                                <div class="form-group">
+                                      <label>Blog Content</label>
+                                      <textarea class="form-control" name="blog[body]" rows="8" required><%= blog.body %></textarea>
+                                </div>
+
+                                 <input type="submit" class="btn btn-outline-success" value="Submit">
+
+                            </form>
+                        
+                        </div>
+                        
+                  </div>
+            </div>
+      </div>
+</div>
+
+
+<% include ../partials/footer%>

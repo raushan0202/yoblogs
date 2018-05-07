@@ -1,0 +1,155 @@
+<% include ../partials/header %>
+<script type="text/javascript" src="/scripts/comments.js"></script>
+<script type="text/javascript" src="/scripts/ratings.js"></script>
+<script type="text/javascript" src="/scripts/jquery.form.js"></script>
+<% var rating = 0 %>
+<div class="container">
+    <div class="row">
+         <div class="col-md-2">
+
+         </div>
+         <div class="col-md-7 img-thumbnail">
+                 <div class="row">
+                          <div class="h4 title" style ="padding : 10px 15px;"><%= blog.title %></div>
+                          <div class="col-md-12">
+                                     <div class="img-thumbnail">
+                                            <div class="thumbnail">
+                                                  <img class="image responsive" src="/images/uploads/blogs/<%= blog.imageName %>">
+                                            </div>
+                                            <div class="text-muted">
+                                                  <span><%= blog.created.toDateString() %></span>
+                                            </div>
+                                            <div class="">
+                                                  <p><%- blog.body %></p>
+                                                  <p>
+                                                      <em>Posted By <%= blog.author.username %></em>
+                                                  </p>
+                                            </div>
+                                            <div>
+                                                  <% if(currentUser && blog.author.id.equals(currentUser._id)){ %>
+                                                  <a class="btn btn-outline-success" href="/blogs/<%= blog._id %>/edit">Edit</a>
+                                                  <form id="delete" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+                                                        <button class="btn btn-outline-danger">Delete</button>
+                                                  </form>
+                                                  <% } %>
+                                                  
+                                                  
+                                                  <% var n = blog.ratings.length; %>
+                                                  <% var currentUserRating; %>
+
+                                                  
+
+                                                  <% if(n == 0){ %>
+                                                        <% if(currentUser && !(blog.author.id.equals(currentUser._id))){ %>
+                                                                <button class="btn" id="ratingButton" onclick="showModelForRatings()" >
+                                                                Rate this blog
+                                                                </button>
+
+                                                        <% } %>
+                                                  <% } else { %>
+                                                        <% for(var i=0;i < n;i++){  %>
+                                                              <% if(currentUser && currentUser._id.equals(blog.ratings[i].author.id)){ %>
+                                                                  
+                                                                  <% currentUserRating = blog.ratings[i].rating %>
+                                                                  <% break; %>
+                                                              <% }else if(currentUser && !(blog.author.id.equals(currentUser._id))){ %>
+                                                                  <% if(i == n-1){ %>
+                                                                      <button class="btn" id="ratingButton" onclick="showModelForRatings()" >
+                                                                      Rate this blog
+                                                                      </button>
+                                                                  <% } %>
+
+                                                              <% } %>
+                                                        <% } %>
+                                                  <% } %>
+                                                  <% if(blog.avgRating != 0){ %>
+                                                        
+                                                        <% if(blog.avgRating >= 3){ %>
+                                                             <span class="avgRating liked"  > 
+                                                             <%= blog.avgRating.toFixed(1) %> ★</span>
+                                                        <% } else { %>
+                                                             <span class="avgRating disliked"  > 
+                                                             <%= blog.avgRating.toFixed(1) %> ★</span>
+                                                        <% } %>
+                                                  <% } %>
+
+                                            </div>
+
+                                            <!-- The Modal -->
+
+                                            <div id="myModal" class="modal">
+
+                                              <!-- Modal content -->
+                                              <div class="modal-content">
+                                                <span class="close">&times;</span>
+                                                
+                                                <div id="starContainerDiv">
+                                                     <div>
+                                                         <span id="star-1-add-rating" class="rating-star">★</span>
+                                                         <span id="star-2-add-rating" class="rating-star">★</span>
+                                                         <span id="star-3-add-rating" class="rating-star">★</span>
+                                                         <span id="star-4-add-rating" class="rating-star">★</span>
+                                                         <span id="star-5-add-rating" class="rating-star">★</span>
+
+                                                     </div>
+                                                     
+                                                     <button class="btn btn-outline-success" id="submitRatingButton" onclick="submitRating( returnRating() ,'<%= blog._id %>')" >Submit</button>
+                                                </div>
+                                              </div>
+
+                                            </div>
+
+                                    </div>
+                                    
+                                    
+
+                          </div>
+                 </div> 
+                 <div class="row">
+
+                      <div class="col-md-12">
+                             <p>Comments</p>
+                             <div class="img-thumbnail">
+                                      <div id="comments_container">
+                                        <script>fetchComments('<%= blog._id%>');</script>
+                                      </div>
+                                      <% if(currentUser){ %>
+                                          
+                                              
+                                               <form id="newCommentForm" action="/blogs/<%= blog._id %>/comments" method="POST" onsubmit="return false;">
+                                               <div class="row">
+                                                    <div class="col-md-8" style="padding-right : 0"> 
+                                                    
+                                                         
+                                                         <input id="inputComment" class="form-control" type="text" name="comment[text]" placeholder="comment">
+                                                         
+                                                         <input type="reset" id="newCommentForm_reset" hidden>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                         <input id="postComment" class="btn btn-outline-success" type="button" onclick="uploadComments('<%= blog._id%>')" value="post">  
+                                                               
+                                                    </div>
+                                              </div>
+                                               </form>
+                                              
+                                          
+                                       <% } %>
+                             </div>
+                          
+                      </div>
+                </div>
+
+         </div>
+         <div class="col-md-2">
+
+         </div>
+
+    </div>
+    
+    
+
+</div>
+
+
+<script type="text/javascript" src="/scripts/ratings.js"></script>
+<% include ../partials/footer%>

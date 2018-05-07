@@ -1,0 +1,53 @@
+
+
+<% var i = 1 %>
+<% blog.comments.forEach(function(comment){ %>
+   
+   <div class="comment">
+     <% var n = blog.ratings.length; %>
+     <% if(n != 0){ %>
+            
+            
+             <% for(var i=0;i < n;i++){  %>
+
+                    <% if(comment.author.id.equals(blog.ratings[i].author.id)){ %>
+                         <% if(blog.ratings[i].rating >= 3){ %>
+                               <span class="rating liked" >
+                               <%= blog.ratings[i].rating %> ★</span>
+                         <% } else { %>
+                               <span class="rating disliked" >
+                               <%= blog.ratings[i].rating %> ★</span>
+                         <% } %>
+                         <strong><%= comment.author.username %></strong>
+                         <span class="comment-time text-muted"><%= comment.created.toDateString() %></span>
+                         <% break; %>
+                         
+                    <% }else { %>
+                         
+                         <% if(i == n-1){ %>
+                                 <strong><%= comment.author.username %></strong>
+                                 <span class="comment-time text-muted"><%= comment.created.toDateString() %></span>
+                                 
+                         <% } %>
+                    <% } %>
+                    
+             <% }; %>
+     <% }else { %>
+             <strong><%= comment.author.username %></strong>
+             <span class="comment-time text-muted"><%= comment.created.toDateString() %></span>
+
+     <% } %>
+     
+         <p id="paraId<%= i %>" >
+            <%= comment.text %>
+         </p>
+     
+     <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+        <form id="paraId<%= i %>_form" method="POST" action="/blogs/<%= blog._id %>/comments/<%=comment._id%>?_method=PUT" onsubmit="return false"></form>
+            <button id="paraId<%= i %>_edit"class="btn btn-outline-success btn-sm commentEditButton" onclick="editComment('paraId<%= i %>')" >Edit</button>
+            <button id="paraId<%= i %>_save"class="btn btn-outline-success btn-sm commentSaveButton" onclick="saveComment('paraId<%= i %>','<%= blog._id %>','<%= comment._id%>')" style="display:none">Save </button>
+            <button id="paraId<%= i %>_delete"class="btn btn-outline-danger btn-sm commentSaveButton" onclick="deleteComment('<%= blog._id %>','<%= comment._id%>')">Delete</button>
+     <% } %>
+    </div>
+    <% i = i + 1 %>
+<% }); %>
