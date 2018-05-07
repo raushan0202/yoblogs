@@ -17,7 +17,7 @@
                             <img  id="profilePic" class="img-fluid circleBase type1" alt="Responsive image"  src="https://yoblogs.herokuapp.com/images/serverSideImages/imagePlaceholder.jpeg">
                         <% }else { %>
                             <img  id="profilePic" class="img-fluid circleBase type1" alt="Responsive image"  
-                            src="/images/uploads/profile/<%= user.imageName %>">
+                            src="https://yoblogs.herokuapp.com/images/uploads/profile/<%= user.imageName %>">
                         <% } %>
                         <button id="changeProfilePicture" onclick="showFileChooser()" >Change Profile Picture</button>
                         <form action="/profile/picture" method="POST" enctype="multipart/form-data">
