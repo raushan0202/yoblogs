@@ -14,10 +14,10 @@
                <div class="row">
                    <div id="pic" class="col-md-12">
                         <% if(user.imageName == null){ %>
-                            <img  id="profilePic" class="img-fluid circleBase type1" alt="Responsive image"  src="https://yoblogs.herokuapp.com/images/serverSideImages/imagePlaceholder.jpeg">
+                            <img  id="profilePic" class="img-fluid circleBase type1" alt="Responsive image"  src="/images/serverSideImages/imagePlaceholder.jpeg">
                         <% }else { %>
                             <img  id="profilePic" class="img-fluid circleBase type1" alt="Responsive image"  
-                            src="https://yoblogs.herokuapp.com/images/uploads/profile/<%= user.imageName %>">
+                            src="/images/uploads/profile/<%= user.imageName %>">
                         <% } %>
                         <button id="changeProfilePicture" onclick="showFileChooser()" >Change Profile Picture</button>
                         <form action="/profile/picture" method="POST" enctype="multipart/form-data">
