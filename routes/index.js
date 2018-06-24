@@ -242,6 +242,173 @@ router.get("/verification/:hash",function(req,res){
 });
 
 
+//show password recovery page
+
+router.get("/recover",function(req,res){
+	res.render("recover");
+});
+
+//Send password recovery link to registered email id
+router.post("/recover",function(req,res){
+	async.waterfall([
+		function(done){
+			crypto.randomBytes(25,function(err,buff){
+
+				var token = buff.toString('hex');
+				done(err,token);
+			});
+		},
+		function(token,done){
+			User.findOne({email : req.body.email},function(err,user){
+				if(!user){
+					console.log(err);
+					//console.log("here");
+					return res.redirect("/recover");
+				}
+				user.resetPasswordToken = token;
+				user.resetPasswordExpires = Date.now() + 3600000; //1 Hour
+				user.save(function(err){
+					done(err,token,user);
+				});
+			});
+
+		},
+		function(token,user,done){
+			// Use Smtp Protocol to send Email
+			var smtpTransport = mailer.createTransport({
+			    service: "Gmail",
+			    auth: {
+			    	
+				        user: "yoblogs02@gmail.com",
+				        pass: "********"
+
+			    }
+			});
+
+			var mail = {
+			    from: "YOBlogs Limited <yoblogs02@gmail.com>",
+			    to: user.email,
+			    subject: "Reset Password",
+			    text: 'You are receiving this because you have requested the reset of the password for your account.\n\n' +
+			          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+			          'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+			          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+			    
+			}
+
+			smtpTransport.sendMail(mail, function(error, response){
+			    if(error){
+			        console.log(error);
+			    }else{
+			        console.log("Message sent: " + response.message);
+			        res.send("Check your email for password reset link.");
+			    }
+
+			    smtpTransport.close();
+			    done(err,'done');
+			});
+		}
+
+		],function(err){
+		if(err) {
+			console.log(err);
+			return next(err);
+		}
+		res.redirect("/recover");
+	});
+
+
+});
+
+// RESET ROUTE - show password reset page
+router.get("/reset/:token",function(req,res){
+	User.findOne({resetPasswordToken : req.params.token, resetPasswordExpires : { $gt: Date.now()  } },function(err,user){
+		if(!user){
+			//req.flash('error','Password reset token is invalid or has expired.');
+			return res.redirect("/recover");
+		}
+		res.render("reset",{ user : user});
+	});
+});
+//RESET ROUTE - Handle password reset logic
+router.post("/reset/:token",function(req,res){
+	async.waterfall([
+		function(done){
+			User.findOne({resetPasswordToken : req.params.token, resetPasswordExpires : { $gt : Date.now() } },function(err,user){
+				if(!user){
+					req.flash('error', 'Password reset token is invalid or has expired.');
+		            return res.redirect('back');
+				}
+				if(req.body.newPassword === req.body.confirmPassword){
+						user.setPassword(req.body.newPassword,function(err,user){
+						if(err){
+							console.log(err);
+							//req.flash('error', 'Sorry something went wrong');
+			                return res.redirect('back');
+						}
+						user.resetPasswordToken = undefined;
+						user.resetPasswordExpires = undefined;
+						user.save(function(err){
+							req.logIn(user, function(err) {
+				            done(err, user);
+				          });
+						});
+					});
+
+				} else {
+					console.log("passwords do not match");
+					//req.flash('error', 'Passwords do not match')
+		            res.redirect('back');
+
+				}
+				
+			});
+
+		},
+		function(user,done){
+			var smtpTransport = mailer.createTransport({
+			    service: "Gmail",
+			    auth: {
+			    	
+				        user: "yoblogs02@gmail.com",
+				        pass: "*******"
+
+			    }
+			});
+
+			var mail = {
+			    from: "YOBlogs Limited <yoblogs02@gmail.com>",
+			    to : user.email,
+			    subject: "Password Updated Successfully",
+			    text: 'Hello,\n\n' +
+                      'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+			    
+			}
+
+			smtpTransport.sendMail(mail, function(err, response){
+			    if(err){
+			        console.log(err);
+			    }else{
+			        console.log("Message sent ");
+			        //req.flash('success', 'Success! Your password has been changed.');
+			        //done(err);
+
+			    }
+
+			    smtpTransport.close();
+			    done(err);
+			});
+
+		}
+
+		],function(err){
+		  console.log(err);
+		  res.redirect("/");
+	});
+	
+});
+
+
 //middleware
 
 function sendMail(email,link){
