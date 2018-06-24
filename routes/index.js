@@ -251,7 +251,7 @@ function sendMail(email,link){
 	    auth: {
 	    	
 		        user: "yoblogs02@gmail.com",
-		        pass: "pANDU6.3"
+		        pass: "*******"
 
 	    }
 	});
